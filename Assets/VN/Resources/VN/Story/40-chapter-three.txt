@@ -1,0 +1,212 @@
+:: ch3_open
+@chapter "Chapter Three" "Two kinds of keeping"
+@bg rooftop fade=1.6
+@bgm school
+@sfx wind
+
+Wednesday came up clear for the first time in a week. From the academy roof you could see the cones already stacked at the top of the coast road, orange and patient, waiting for noon.
+
+@show rin at=left pose=08-holding-books fade=0.9
+@face rin 01-neutral
+@if kept_ledger >= 1 -> ch3_ledger_here
+@jump ch3_no_ledger
+
+:: ch3_ledger_here
+She had the ledger open on the parapet with a stone on each corner, which is how you read a book in a coastal wind if you have any sense at all.
+
+Rin @02-smile: You came.
+
+Rin @01-neutral: Three hundred and eleven of the four hundred and six are cross-checked against Ministry transfers now. Yours is a horrible system and I love it very much.
+@jump ch3_mira_arrives
+
+:: ch3_no_ledger
+She was on the parapet with the ledger shut on her lap, and she did not open it while I was walking over.
+
+Rin @08-worried: I wasn't sure you'd come up.
+
+Rin @01-neutral: You've been very careful this week. Careful is a way of leaving early.
+@jump ch3_mira_arrives
+
+:: ch3_mira_arrives
+@sfx impact
+@shake 0.3
+@show mira at=right pose=06-waving fade=0.8
+@face mira 12-smug
+Mira @12-smug: Don't get up.
+
+@show mira at=right pose=03-arms-crossed fade=0.3
+@face mira 01-neutral
+Mira @01-neutral: Noon, both of you. I've got a truck at the school gate and a very short temper.
+
+@show rin expr=05-angry fade=0.3
+Rin @05-angry: Ninety-five names.
+
+Rin @01-neutral: That's what's left. Ninety-five people whose last official act will be to not appear in a book.
+
+@show mira expr=04-sad fade=0.3
+Mira @04-sad: I know what a name costs. Better than you think.
+
+Mira @01-neutral: But the gate closes at 14:00 whether your book is finished or not, and everything above the waterline needs to be behind those cones when it does.
+
+@wait 0.5
+And then she said the thing she had clearly been carrying up eight flights of stairs.
+
+@show mira expr=08-worried fade=0.35
+Mira @08-worried: Unless.
+
+You: Unless.
+
+Mira @01-neutral: The gate reads. It's been reading for nineteen years, and it doesn't stop when it's full, it just... overwrites, the way a tired clerk does.
+
+@show mira expr=09-thinking fade=0.3
+Mira @09-thinking: Give it something long to read. Something dense, and true, and difficult. It slows down. We've done it with tide tables and it bought us forty minutes.
+
+@show rin expr=06-surprised fade=0.35
+Rin @06-surprised: You want to feed it the register.
+
+Mira @01-neutral: I want to feed it four hundred and six names that all check out. That's the densest true thing in this town.
+
+@show rin expr=11-crying fade=0.4
+Rin @11-crying: And then it has them. Not the paper. Them.
+
+Mira @04-sad: Yes.
+
+@wait 0.6
+Two women on a roof, and between them a book, and under all of it a machine going through the town like someone tidying a desk they intend to leave.
+
+> Give Mira the ledger -> ch3_give
+> Stand with Rin -> ch3_keep
+> [knows_signal >= 2] Take the ledger down to the gate yourself -> ch3_third
+
+:: ch3_give
+You: Take it.
+
+@show rin expr=06-surprised fade=0.3
+Rin @06-surprised: {name} —
+
+You: It buys forty minutes. Forty minutes is ninety-five people through the cones instead of sixty.
+
+@show mira expr=01-neutral fade=0.3
+Mira @01-neutral: Sixty-eight, realistically. But yes.
+
+@set trust_mira += 2
+@set kept_ledger -= 1
+
+@show rin expr=04-sad fade=0.4
+Rin @04-sad: Then somebody has to remember them out loud.
+
+Rin @01-neutral: That's not a metaphor. That's a job, and I'm taking it, and I'd like a witness.
+@jump ch3_noon
+
+:: ch3_keep
+You: No. The book stays with her.
+
+@show mira expr=05-angry fade=0.3
+Mira @05-angry: That is not your call, clerk.
+
+You: It's not yours either. It's a school record. It's mine twice over — once because I'm Records, and once because I've read it.
+
+@show mira expr=09-thinking fade=0.4
+Mira @09-thinking: ...
+
+@show rin expr=03-happy fade=0.35
+Rin @03-happy: He does that. He waits until you're sure he's furniture.
+
+@set trust_rin += 2
+Mira @04-sad: Forty minutes, {name}. That's what you just spent.
+@jump ch3_noon
+
+:: ch3_third
+You: There's a third option and you've both been standing on either side of it.
+
+You: The gate slows down when it reads something true. Fine. Read it something that answers back.
+
+@show mira expr=06-surprised fade=0.35
+Mira @06-surprised: Meaning?
+
+You: Meaning I take the ledger down the shaft, and I read it. Out loud. Line by line, with the times and the transfers and the aunt in Sase.
+
+You: You can't erase a name that's still being said.
+
+@show rin expr=06-surprised fade=0.35
+Rin @06-surprised: That's — {name}, that's not filing, that's a séance.
+
+You: It's a roll call. You've been holding one for nine days.
+
+@show mira expr=09-thinking fade=0.5
+Mira @09-thinking: The shaft has an intercom loop. Nineteen years of it, still running, still logged.
+
+@show mira expr=02-smile fade=0.3
+Mira @02-smile: If you read into that loop, the gate hears it four times a second until the charges go.
+
+@set trust_rin += 1
+@set trust_mira += 1
+@set read_aloud += 1
+@jump ch3_noon
+
+:: ch3_noon
+@bg rooftop fade=0
+@wait 0.6
+@sfx chime
+Noon came the way noon does when you have been dreading it — early, and without ceremony.
+
+@show mira at=right pose=11-over-shoulder fade=0.4
+@face mira 01-neutral
+Mira @01-neutral: Truck. Gate. Now.
+
+@show rin at=left pose=02-hands-clasped fade=0.4
+@face rin 08-worried
+Rin @08-worried: Ninety-five.
+
+> Get on the truck -> ch3_leave
+> Stay for the ninety-five -> ch3_stay
+
+:: ch3_leave
+You: We go. We finish the register from behind the cones, on a table, with two Ministry terminals and someone else's electricity.
+
+@show rin expr=04-sad fade=0.3
+Rin @04-sad: ...All right.
+
+Rin @01-neutral: All right. That's a real answer. I've had nine days of people giving me kind ones.
+
+@set left_town += 1
+@jump ch3_finale
+
+:: ch3_stay
+You: Ninety-five. Go on without us.
+
+@show mira expr=05-angry fade=0.3
+Mira @05-angry: If you are above the waterline at 14:00 I cannot promise you exist at 14:01.
+
+You: Understood.
+
+@show mira expr=04-sad fade=0.35
+Mira @04-sad: No, you don't. Nobody does. That's what makes it work.
+
+@set stayed_late += 1
+@jump ch3_finale
+
+:: ch3_finale
+@bg black fade=1.4
+@bgm stop
+@hideall fade=1.0
+@wait 0.8
+@bgm tense
+@bg bunker fade=1.4
+
+At 13:40 the town went quiet in a way that had nothing to do with sound. It was the quiet of a room where someone has stopped waiting for you to say something.
+
+@wait 0.4
+@if read_aloud >= 1 -> ending_signal_intro
+@if stayed_late >= 1 -> ch3_route_stayed
+@jump ch3_route_left
+
+:: ch3_route_stayed
+@if trust_rin >= 5 -> ending_ledger_intro
+@if trust_mira >= 5 -> ending_gate_intro
+@jump ending_lost_intro
+
+:: ch3_route_left
+@if trust_rin >= 4 -> ending_ledger_intro
+@if trust_mira >= 4 -> ending_gate_intro
+@jump ending_alone_intro

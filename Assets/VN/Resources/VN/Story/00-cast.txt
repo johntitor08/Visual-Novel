@@ -1,0 +1,7 @@
+# Where the Signal Ends -- cast definitions.
+# Files in this folder are loaded in filename order, so this one must sort first.
+
+@char rin  name="Rin Amagi" sprites=v1-schoolgirl color=#F0937A
+@char mira name="Mira Vale" sprites=v2-armor      color=#7FD4E8
+
+@you name=Kai color=#C9D6E8

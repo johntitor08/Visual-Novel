@@ -1,0 +1,187 @@
+:: ch1_open
+@chapter "Chapter One" "The roll call"
+@bg classroom fade=1.4
+@bgm school
+
+The archive was not eleven boxes. The archive was a classroom on the second floor with the desks pushed to the walls and forty years of paper stacked where the desks had been.
+
+@show rin at=left pose=12-sitting fade=0.8
+@face rin 09-thinking
+Rin @09-thinking: I said eleven was optimistic.
+
+You: This is four hundred boxes.
+
+Rin @02-smile: Two hundred and twelve. I counted. Twice, because the first count came out at two hundred and thirteen and I couldn't find the extra one again.
+
+@wait 0.4
+She said that the way other people mention the weather.
+
+You: You lost a box.
+
+Rin @01-neutral: I lost a box. And a corridor, on Tuesday. It came back.
+
+> That's a joke. -> ch1_joke
+> That's not a joke. -> ch1_serious
+> Ignore it and open a box. -> ch1_ignore
+
+:: ch1_joke
+You: That's a joke.
+
+@show rin expr=02-smile fade=0.3
+Rin @02-smile: It is if you leave on Thursday.
+
+Rin @01-neutral: Everything here is a joke if you leave on Thursday. That's rather the point of the cones.
+@jump ch1_ledger
+
+:: ch1_serious
+You: That's not a joke.
+
+@show rin expr=08-worried fade=0.35
+Rin @08-worried: No.
+
+Rin @04-sad: I've been alone in a building that keeps changing its mind for nine days, and you're the first person who didn't laugh.
+
+@set trust_rin += 1
+Rin @01-neutral: Thank you. That's an embarrassing thing to be grateful for.
+@jump ch1_ledger
+
+:: ch1_ignore
+I opened the nearest box. Attendance sheets, 1994. Nothing in them had ever mattered to anyone.
+
+Rin @08-worried: You're going to be one of the ones who doesn't ask.
+
+@set trust_rin -= 1
+Rin @01-neutral: That's all right. Most people aren't.
+@jump ch1_ledger
+
+:: ch1_ledger
+@show rin at=center pose=08-holding-books fade=0.5
+@face rin 01-neutral
+She put the ledger down on the one clear desk and opened it to a page near the back, where the handwriting was her own.
+
+Rin @01-neutral: Four hundred and six names. Four hundred and five of them have a line now. Transferred, relocated, went to an aunt in Sase, went to an aunt in Sase and came back for a bicycle.
+
+Rin @08-worried: And then there's this one.
+
+@sfx signal
+@show rin expr=08-worried fade=0.3
+Rin @08-worried: Second year, class two. I know her. I know her hair clip and the way she says my name with the wrong stress on it.
+
+Rin @11-crying: And there's nothing in this book where her name should be. There's a space the right width, and the ruled line under it, and nothing on the line.
+
+You: Somebody erased it.
+
+Rin @05-angry: Nobody erased it. I'd see the eraser. Paper remembers being erased — it goes soft and grey and you can hold it to the window.
+
+Rin @04-sad: This paper has never had anything on it. And I still remember her.
+
+@wait 0.6
+@bg classroom fade=0
+@shake 0.35
+@sfx signal
+Somewhere out in the bay, something made a sound like a tuning fork the size of a ship, and every window in the room agreed with it for about a second and a half.
+
+@show rin expr=06-surprised fade=0.25
+Rin @06-surprised: There. That.
+
+Rin @01-neutral: Four times a day since the order came through. You can set a watch by it, if you have a watch you trust.
+
+@set knows_signal += 1
+
+> Ask what she thinks it is -> ch1_ask_signal
+> Tell her the Ministry logged it as harbour work -> ch1_official
+> Offer to help finish the register -> ch1_help
+
+:: ch1_ask_signal
+You: What do you think it is?
+
+@show rin expr=09-thinking fade=0.3
+Rin @09-thinking: I think it's reading us.
+
+Rin @01-neutral: Not scanning. Reading. The way you read a shopping list and then don't need the list any more.
+
+@set trust_rin += 1
+You: And then you throw the list away.
+
+Rin @04-sad: And then you throw the list away.
+@jump ch1_close
+
+:: ch1_official
+You: The Ministry logged it as harbour survey work. Sonar, on a fixed schedule.
+
+@show rin expr=12-smug fade=0.3
+Rin @12-smug: Sonar. On a fixed schedule. Through a hillside, into a filing cabinet, and out again.
+
+Rin @05-angry: Do you believe that, or are you quoting it?
+
+> I'm quoting it. -> ch1_quoting
+> I believe it. -> ch1_believe
+
+:: ch1_quoting
+You: I'm quoting it. I've never believed a single line of survey paperwork in my life.
+
+@show rin expr=02-smile fade=0.3
+Rin @02-smile: Good. Quote things at me all you like. Just say which ones are quotes.
+
+@set trust_rin += 1
+@jump ch1_close
+
+:: ch1_believe
+You: I believe it. Sonar carries strangely in a bay this shape.
+
+@show rin expr=01-neutral fade=0.3
+Rin @01-neutral: All right.
+
+Rin @04-sad: That's the answer that lets you sleep on the ferry home. I'm not going to argue you out of it.
+
+@set trust_rin -= 1
+@jump ch1_close
+
+:: ch1_help
+You: Give me half the register. I can match names against transfer records faster than you can.
+
+@show rin expr=03-happy fade=0.35
+Rin @03-happy: You'd do that?
+
+You: I'd do that instead of counting boxes for three days, yes.
+
+@set trust_rin += 2
+@set kept_ledger += 1
+Rin @02-smile: Then we start at the M's. I've been avoiding the M's.
+@jump ch1_close
+
+:: ch1_close
+@bg classroom fade=0
+@wait 0.5
+We worked until the light went orange and the fog outside stopped being white and started being gold.
+
+@show rin at=center pose=12-sitting fade=0.4
+@face rin 04-sad
+Rin @04-sad: Four hundred and five.
+
+Rin @01-neutral: I'm going to the seawall before it's dark. I go every evening. You can come, or you can stay here with two hundred and twelve boxes.
+
+> Go with her -> ch1_go
+> Stay and keep working -> ch1_stay
+
+:: ch1_go
+You: I'll come.
+
+@show rin expr=02-smile fade=0.3
+Rin @02-smile: Bring a coat. The bay is honest about the cold.
+@set trust_rin += 1
+@jump ch2_open
+
+:: ch1_stay
+You: Somebody has to make eleven boxes out of this.
+
+@show rin expr=01-neutral fade=0.3
+Rin @01-neutral: Somebody does.
+
+Rin @08-worried: If the sound comes again while I'm out, write down what time it is. Please. I want to know whether the clocks agree.
+
+@hide rin fade=0.7
+@wait 0.4
+I wrote down the time. The clocks did not agree.
+
+@jump ch2_open

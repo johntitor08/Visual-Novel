@@ -1,0 +1,219 @@
+:: ch2_open
+@hideall fade=0.6
+@chapter "Chapter Two" "The woman who came out of the water"
+@bg beach_dusk fade=1.6
+@bgm sea
+@sfx wave
+
+The seawall at Kanamori is nine hundred metres of concrete with a rail that stopped being safe in the eighties. From the middle of it you can see the whole town at once, which is a thing very few towns will let you do.
+
+@if trust_rin >= 3 -> ch2_with_rin
+@jump ch2_alone
+
+:: ch2_with_rin
+@show rin at=left pose=07-hands-behind fade=0.8
+@face rin 01-neutral
+Rin @01-neutral: Third bench from the end. It's the only one that doesn't rock.
+
+We sat. She did not talk for eleven minutes, and it was the good kind of not talking.
+
+Rin @04-sad: My mother's name is in the ledger too. 1979, second year, left in March.
+
+Rin @01-neutral: I checked yesterday. It's still there. I check every day now, like a light you can't stop switching.
+@jump ch2_arrival
+
+:: ch2_alone
+I went down to the wall alone at half past six, because the archive had begun to feel like a room that was listening politely and waiting for me to leave.
+
+The bench third from the end was still warm. Nobody was on it.
+@jump ch2_arrival
+
+:: ch2_arrival
+@wait 0.5
+@sfx signal
+@shake 0.5
+The fourth sound of the day came at 18:44, and this time the water answered it.
+
+@flash #BFE9F2 0.5
+@bg sea_gate fade=1.2
+@bgm tense
+Two hundred metres out, the bay went flat. Not calm — flat, like a page, with the wave shapes still drawn on it and not moving.
+
+And something walked out of it.
+
+@show mira at=right pose=01-standing fade=1.0
+@face mira 01-neutral
+@sfx impact
+White armour, scuffed to grey at the forearms, water sheeting off it in a way that suggested the water was in a hurry to be elsewhere. She came up the slipway without breaking step and stopped when she saw me.
+
+Mira @01-neutral: You're not on my list.
+
+You: I'm not on anyone's list. That's rather my job.
+
+@show mira expr=09-thinking fade=0.3
+Mira @09-thinking: Ministry?
+
+You: Records.
+
+Mira @12-smug: Records. Wonderful. They sent me a filing cabinet with legs.
+
+@if trust_rin >= 3 -> ch2_rin_speaks
+@jump ch2_questions
+
+:: ch2_rin_speaks
+@show rin expr=05-angry fade=0.3
+Rin @05-angry: He has a name.
+
+@show mira expr=06-surprised fade=0.3
+Mira @06-surprised: So do you, and yours is a problem.
+
+Mira @01-neutral: Rin Amagi. Student council. You were bussed out on the fourth with the rest of the school.
+
+@show rin expr=03-happy fade=0.35
+Rin @03-happy: Was I? How lovely. I've been on a bus for nine days and nobody told me.
+
+@show mira expr=09-thinking fade=0.3
+Mira @09-thinking: ...You're in the manifest. I read it this morning.
+
+Rin @01-neutral: Then your manifest is wrong, Captain, and I'd very much like to know how it got that way.
+@jump ch2_questions
+
+:: ch2_questions
+@show mira at=right pose=03-arms-crossed fade=0.5
+@face mira 01-neutral
+Mira @01-neutral: Captain Mira Vale. Coastal Containment. And before you ask: no, I can't tell you, and no, that isn't going to stop you asking.
+
+> Ask what is in the bay -> ch2_q_bay
+> Ask why she came out of the water -> ch2_q_water
+> Ask what happens on Thursday -> ch2_q_thursday
+
+:: ch2_q_bay
+You: What's in the bay?
+
+@show mira expr=09-thinking fade=0.3
+Mira @09-thinking: A gate. That's the word we've settled on, and it's the wrong word, but it's shorter than the right one.
+
+Mira @01-neutral: Nineteen years ago something opened down there and it has been very slowly reading the coast ever since. Reading, and then tidying.
+
+You: Tidying.
+
+Mira @04-sad: Every four hours it takes something small that nobody will miss. A dog. A bus timetable. A girl in class two whose hair clip you'd recognise but whose name you won't.
+
+@set knows_signal += 1
+@set trust_mira += 1
+@jump ch2_pressure
+
+:: ch2_q_water
+You: You walked out of the sea in a hundred kilos of armour. Do you want to explain that first?
+
+@show mira expr=12-smug fade=0.3
+Mira @12-smug: No, but I'm going to.
+
+Mira @01-neutral: There's a shaft under the bay. My unit has been living in it for six weeks. The lift comes up through the water because the water is the only part of Kanamori that hasn't started forgetting things.
+
+@set trust_mira += 1
+Mira @04-sad: Salt is stubborn. It's the only ally I've got left down there.
+@jump ch2_pressure
+
+:: ch2_q_thursday
+You: What actually happens on Thursday?
+
+@show mira expr=01-neutral fade=0.3
+Mira @01-neutral: On Thursday we close it. Properly, from the inside, with everything we've got.
+
+Mira @08-worried: And when a gate that has been reading a town for nineteen years closes, the reading goes with it.
+
+You: Meaning what?
+
+Mira @04-sad: Meaning Kanamori stops being forgotten. And so does everything Kanamori remembers.
+@jump ch2_pressure
+
+:: ch2_pressure
+@bg sea_gate fade=0
+@wait 0.5
+@show mira at=right pose=05-pointing fade=0.4
+@face mira 05-angry
+Mira @05-angry: Which brings me to you. Both of you. Off the coast road by Wednesday noon, no exceptions, and I don't care whose paperwork says otherwise.
+
+> Agree to leave -> ch2_agree
+> Refuse -> ch2_refuse
+> Ask her what she loses -> ch2_ask_cost
+
+:: ch2_agree
+You: Wednesday noon. Understood.
+
+@show mira expr=01-neutral fade=0.3
+Mira @01-neutral: Good. That's the first sentence today that hasn't cost me anything.
+
+@if trust_rin >= 3 -> ch2_rin_upset
+@set trust_mira += 1
+@jump ch2_night
+
+:: ch2_rin_upset
+@show rin expr=11-crying fade=0.35
+Rin @11-crying: {name}.
+
+Rin @05-angry: Four hundred and six names, and you said Wednesday noon like it was a train.
+
+@set trust_rin -= 1
+@set trust_mira += 1
+@jump ch2_night
+
+:: ch2_refuse
+You: No. There's a register in that school with a hole in it, and I'd like to know who fell through.
+
+@show mira expr=05-angry fade=0.3
+Mira @05-angry: People fall through every four hours, clerk. That's the whole problem. You can't file your way out of it.
+
+You: I can try. Trying is most of what filing is.
+
+@show mira expr=09-thinking fade=0.4
+Mira @09-thinking: ...
+
+@set trust_rin += 1
+Mira @01-neutral: That was almost a good answer. Don't do it again where my lieutenant can hear.
+@jump ch2_night
+
+:: ch2_ask_cost
+You: When it closes, and the forgetting goes with it — what do you lose?
+
+@show mira expr=06-surprised fade=0.35
+Mira @06-surprised: ...
+
+@show mira at=right pose=12-sitting fade=0.5
+@face mira 04-sad
+She sat down on the slipway in a hundred kilos of armour, which is not a thing that unit does in front of civilians.
+
+Mira @04-sad: Six weeks ago I had nine people down there. This morning the roster said seven and I signed it without noticing.
+
+Mira @11-crying: I noticed at lunch. I noticed because I made nine cups of tea out of habit and two of them went cold in front of me.
+
+You: What were their names?
+
+Mira @11-crying: I don't know. That's what I've been standing in the sea about.
+
+@set trust_mira += 2
+@set knows_signal += 1
+@jump ch2_night
+
+:: ch2_night
+@bg town_night fade=1.6
+@bgm fog
+@hideall fade=0.8
+@wait 0.5
+
+I walked back through a town with three hundred houses and four lights on. Somewhere behind me a machine the size of a shipping lane was very patiently reading a bus timetable.
+
+@if trust_rin >= 4 -> ch2_note
+@jump ch3_open
+
+:: ch2_note
+There was a note under my door at the inn, in a hand that used a fountain pen for absolutely no reason.
+
+@bg white fade=0.4
+@wait 0.3
+@bg town_night fade=0.4
+"Rooftop. Seven. Bring the ledger, and don't read the M's without me. — R."
+
+@set kept_ledger += 1
+@jump ch3_open
