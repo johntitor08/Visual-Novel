@@ -1,0 +1,115 @@
+:: start
+@bg black fade=0
+@bgm fog
+@chapter "Prologue" "The last ferry into Kanamori Bay"
+
+@bg fog fade=1.6
+@sfx wave
+The ferry cut its engine a hundred metres out, and for a while there was only the sound of water thinking about the hull.
+
+Kanamori Bay closes on Thursday. Not the harbour. The town.
+
+Three days from now, the Interior Ministry will drive a line of orange cones across the coast road, and everything behind it will stop being a place and start being a file.
+
+I am the file.
+
+@askname
+@wait 0.4
+
+Records clerk, second grade. Sent to empty a school archive into eleven cardboard boxes and sign a form that says nothing of value was left behind.
+
+@bg seawall fade=1.4
+@sfx wind
+The fog came off the water in slow sheets, the way steam leaves a cup someone has stopped drinking.
+
+You: Eleven boxes. Three days. Fine.
+
+@wait 0.3
+Nobody met the ferry. The dock had a bicycle rack with no bicycles and a noticeboard with nothing on it but four staples where a notice used to be.
+
+@bg hallway fade=1.2
+@bgm school
+Kanamori Academy still smelled like floor polish and rain. Somebody had been keeping it clean for an empty building.
+
+That should have been the first thing I found strange.
+
+@show rin at=center pose=08-holding-books fade=0.8
+@face rin 06-surprised
+@sfx chime
+Rin @06-surprised: Oh —
+
+Rin @01-neutral: You're not from the Ministry.
+
+You: I am, actually.
+
+Rin @09-thinking: Hm. The last one wore a lanyard and apologised twice before he said hello.
+
+Rin @02-smile: You haven't apologised at all. That's promising.
+
+She had a ledger under one arm, the enormous cloth-bound kind schools stopped using thirty years ago, and a pen behind her ear like she meant to use it before the day was out.
+
+Rin @01-neutral: Rin Amagi. Student council president. Technically the last one, which is a strange thing to put on a form.
+
+You: {name}. Records.
+
+Rin @09-thinking: {name}. Good. Short names survive better.
+
+You: Survive?
+
+Rin @02-smile: Filing. Short names survive filing.
+
+@wait 0.4
+It did not sound like she had meant filing.
+
+> Ask what she is still doing here -> pro_why
+> Ask about the ledger -> pro_ledger
+> Say nothing and start working -> pro_work
+
+:: pro_why
+You: The evacuation order went out nine days ago. Why are you still here?
+
+@show rin expr=04-sad fade=0.3
+Rin @04-sad: Because the register isn't finished.
+
+Rin @01-neutral: Four hundred and six students. Every one of them needs a line saying where they went. Otherwise they just... stop, in the middle of a page.
+
+@set trust_rin += 1
+You: That's an administrative problem, not a reason to miss a ferry.
+
+Rin @05-angry: Spoken like someone who has never been a line on a page.
+@jump pro_after
+
+:: pro_ledger
+You: That book looks older than the building.
+
+@show rin expr=02-smile fade=0.3
+Rin @02-smile: It is. 1961. The school burned down in '78 and this came out with the piano.
+
+Rin @01-neutral: Every name the academy has ever had is in here. Including the ones the Ministry's system doesn't have any more.
+
+@set knows_signal += 1
+You: Doesn't have any more? Records don't go missing at the Ministry. They get archived.
+
+Rin @09-thinking: Mm. That's what the last clerk said, too. Then he went home and I couldn't find his name either.
+@jump pro_after
+
+:: pro_work
+You said nothing, which is a skill, and started counting shelves.
+
+Rin @12-smug: Straight to work. I like that.
+
+Rin @01-neutral: There are eleven boxes in the caretaker's office. Somebody left them in a stack with a note that says ELEVEN, which I thought was optimistic.
+
+@set trust_rin -= 1
+@jump pro_after
+
+:: pro_after
+@show rin at=center pose=01-standing fade=0.4
+@face rin 01-neutral
+Rin @01-neutral: Come on. I'll show you the archive, and you can tell me how many boxes it really is.
+
+@hide rin fade=0.6
+@bg black fade=1.2
+@bgm stop
+@wait 0.5
+@jump ch1_open

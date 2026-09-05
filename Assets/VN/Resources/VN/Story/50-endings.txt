@@ -1,0 +1,256 @@
+# Five endings. Each one is entered by a jump from 40-chapter-three.txt.
+
+:: ending_signal_intro
+@bg bunker fade=1.2
+@bgm tense
+@sfx signal
+The shaft went down four hundred metres and smelled of salt and warm electronics, and at the bottom there was a room with a microphone from 2006 and a light that had been left on for nineteen years.
+
+@show mira at=right pose=08-holding-helmet fade=0.8
+@face mira 01-neutral
+Mira @01-neutral: Loop's live. It'll hear you at four hundred repetitions a second until the charges go at 14:00.
+
+Mira @08-worried: Twenty minutes, {name}. Read fast.
+
+@show rin at=left pose=08-holding-books fade=0.8
+@face rin 01-neutral
+Rin @01-neutral: We read together. I've had more practice.
+
+@wait 0.5
+@bg sea_gate fade=1.6
+@sfx wave
+
+So we read.
+
+Abe, Haruka. Second year, class one. Transferred to Sase Municipal on the fourth, took the school's only left-handed pair of scissors with her.
+
+Amagi, Rin. Third year, class three. Present.
+
+@show rin expr=11-crying fade=0.4
+Rin @11-crying: Present.
+
+@wait 0.4
+Four hundred and six of them, with the times and the transfers and the aunts. Ninety-five that had no line yet, read out anyway, with the space described out loud so the space was also a fact.
+
+And at 13:58, in the middle of the M's, the sound stopped.
+
+@flash #FFFFFF 0.9
+@shake 0.7
+@bg white fade=0.6
+@wait 0.6
+@bg sea_gate fade=1.4
+@bgm sea
+
+Not the charges. Those were still two minutes out. The reading stopped — the way a person stops reading when someone in the room finally says something worth listening to.
+
+@show mira expr=06-surprised fade=0.35
+Mira @06-surprised: It's... holding.
+
+@show rin expr=03-happy fade=0.4
+Rin @03-happy: Keep going. Don't you dare stop, either of you.
+
+@wait 0.5
+@bg beach_dusk fade=1.8
+@hideall fade=1.2
+@bgm warm
+
+Kanamori Bay did not close on Thursday.
+
+It is a strange sort of town now. The cones came down in April. The academy reopened with sixty-one students, and a second-year in class two with a hair clip and a name that four hundred and five other names are holding up.
+
+They keep the ledger in the entrance hall, in a case, open at the M's.
+
+Every morning somebody reads a page of it out loud. It's a school, so of course they made it a duty roster, and of course everybody complains, and of course nobody has ever missed a turn.
+
+@end ending_signal "Where the Signal Ends" "You gave it something worth reading, and it listened."
+
+# ------------------------------------------------------------------------------
+
+:: ending_ledger_intro
+@bg classroom fade=1.4
+@bgm warm
+@show rin at=center pose=08-holding-books fade=0.9
+@face rin 01-neutral
+
+At 14:00 the bay made a sound like a door being shut by someone who is angry but well brought up, and then Kanamori was simply a town on a coast with nothing underneath it.
+
+Ninety-five names went into the gate with the water. Rin never let go of the book.
+
+Rin @04-sad: They're gone.
+
+You: The register isn't.
+
+@show rin expr=11-crying fade=0.4
+Rin @11-crying: The register is four hundred and six lines and ninety-five of them are blank, {name}.
+
+You: Then they're ninety-five blanks with a date, a class, and a reason. That's not nothing. That's the difference between a gap and a wound.
+
+@wait 0.6
+@show rin expr=01-neutral fade=0.4
+Rin @01-neutral: ...
+
+Rin @02-smile: You're going to be insufferable about paperwork for the rest of your life, aren't you.
+
+@wait 0.5
+@bg hallway fade=1.6
+@bgm school
+
+The Ministry accepted the register in November. It is the only Kanamori document that was not classified, because there was no procedure for classifying a thing with holes deliberately left in it.
+
+Nine of the ninety-five have since been remembered by somebody. A grandmother in Sase. A left-handed pair of scissors. A hair clip in a drawer that nobody could explain until Rin drove out with the book and asked.
+
+@show rin at=center expr=02-smile fade=0.8
+Rin @02-smile: Nine. In eleven months.
+
+Rin @01-neutral: That's a rate. Rates can be improved.
+
+@hideall fade=1.2
+@bg white fade=1.6
+She is still improving it.
+
+@end ending_ledger "The Roll Call" "The town went. The names did not."
+
+# ------------------------------------------------------------------------------
+
+:: ending_gate_intro
+@bg bunker fade=1.4
+@bgm tense
+@show mira at=center pose=03-arms-crossed fade=0.9
+@face mira 01-neutral
+
+The ledger went into the gate at 13:12 and bought them fifty-one minutes — eleven more than Mira had promised, because Rin had done the cross-checks and a true thing is heavier than an approximate one.
+
+Sixty-eight people came through the cones in those fifty-one minutes.
+
+Mira @01-neutral: Sixty-eight.
+
+Mira @04-sad: I have never once had a number go the right way. I don't know what to do with my face.
+
+You: Try the top half first.
+
+@show mira expr=02-smile fade=0.4
+Mira @02-smile: ...Noted.
+
+@wait 0.6
+@bg sea_gate fade=1.6
+@sfx impact
+@shake 0.8
+@flash #FFFFFF 0.7
+@bg black fade=1.2
+@bgm stop
+
+At 14:00 they closed it from the inside, the way she said they would, and the bay went dark and ordinary and cold.
+
+@wait 0.8
+@bg seawall fade=1.8
+@bgm sea
+
+Here is what nobody warns you about a gate that reads: when it closes, you get everything back except the thing you fed it.
+
+@show mira at=center pose=01-standing fade=0.9
+@face mira 04-sad
+Mira @04-sad: Two of my people came back. Walked out of the shaft at 14:20 arguing about a football result.
+
+Mira @08-worried: And there's a book I can't remember the contents of, and a girl in class two I know I owe something to, and no way at all to find out what.
+
+You: Four hundred and six.
+
+Mira @06-surprised: What?
+
+You: That's how many were in it. I'm Records. I count things before I hand them over — it's a disease.
+
+@show mira expr=02-smile fade=0.4
+Mira @02-smile: Four hundred and six.
+
+Mira @01-neutral: Right. Well. That's a start, isn't it.
+
+@hideall fade=1.2
+@end ending_gate "The Gate Closes" "You bought fifty-one minutes with four hundred and six names."
+
+# ------------------------------------------------------------------------------
+
+:: ending_alone_intro
+@bg fog fade=1.4
+@bgm fog
+
+I was behind the cones by twelve forty, with eleven cardboard boxes and a form that said nothing of value was left behind.
+
+@wait 0.5
+@bg town_night fade=1.6
+
+At 14:00 there was a sound off the coast that the truck radio reported as scheduled harbour survey work.
+
+The clerk beside me — second grade, like me, with a lanyard — asked if I'd got everything.
+
+You: Everything on the list.
+
+@wait 0.6
+@bg white fade=1.2
+@bgm stop
+@wait 0.4
+@bg fog fade=1.2
+
+The Kanamori file closed in March. Two hundred and twelve boxes, catalogued, cross-referenced, and accepted without a single query, which has never happened to me before or since.
+
+There is one thing in it I can't account for. A cloth-bound ledger, 1961, four hundred and six ruled lines, every one of them blank.
+
+@wait 0.5
+I have held it up to the window. The paper has never had anything on it.
+
+Sometimes I think about the woman who must have carried it, and I can't get past the fact that "must have" is doing all the work in that sentence.
+
+@end ending_alone "Clerical Error" "You filed everything. The file was the problem."
+
+# ------------------------------------------------------------------------------
+
+:: ending_lost_intro
+@bg classroom fade=1.4
+@bgm tense
+@show rin at=center pose=02-hands-clasped fade=0.8
+@face rin 08-worried
+
+We stayed for the ninety-five, and we were honest with each other about the arithmetic, and the arithmetic did not care.
+
+Rin @08-worried: Sixty-one. We got sixty-one lines done.
+
+@sfx signal
+@shake 0.6
+@wait 0.4
+At 13:52 the sound came early.
+
+@show rin expr=06-surprised fade=0.3
+Rin @06-surprised: That's not four hours. That's not — it's not due until —
+
+@flash #BFE9F2 0.8
+@shake 1.0
+@bg white fade=0.8
+@wait 0.7
+@bg classroom fade=1.4
+
+@show rin at=center expr=01-neutral fade=0.6
+Rin @01-neutral: Sorry — I'm so sorry, I've completely lost your name.
+
+You: {name}.
+
+@show rin expr=08-worried fade=0.35
+Rin @08-worried: {name}. {name}. Yes. Right.
+
+She wrote it on her hand. Twenty minutes later she read her hand and could not think what it was for.
+
+@wait 0.6
+@hideall fade=1.4
+@bg fog fade=1.6
+@bgm stop
+
+At 14:00 the charges went, and the bay closed, and whatever was still above the waterline stayed there in whatever state it had reached.
+
+@wait 0.8
+@bg black fade=2.0
+
+There is a school on the coast road with two hundred and twelve boxes in an upstairs room and a ledger on a desk, open, with a pen beside it.
+
+Four hundred and six ruled lines. Sixty-one of them filled in, in two different hands, and then nothing.
+
+Nobody has ever worked out whose hands.
+
+@end ending_lost "Unwritten" "You stayed for the ninety-five, and the count went one line too far."
