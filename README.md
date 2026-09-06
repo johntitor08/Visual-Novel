@@ -84,13 +84,31 @@ character and missing sprite file, and reports the ending count against `VNEndin
 ## Art and audio
 
 - **Characters** — `Assets/VN/Resources/VN/Characters/<set>/{poses,expressions,portraits}/`.
-  An `AssetPostprocessor` applies the right import settings on first import (Sprite, Full
-  Rect, alpha-is-transparency, bottom pivot for full bodies). Adding a new sprite set is
-  a folder copy plus one `@char` line.
-- **Backgrounds** are procedural: named palettes rendered to a texture at runtime. Dropping
-  `Assets/VN/Resources/VN/Backgrounds/<name>.png` overrides the palette of the same name.
-  Existing names: `classroom hallway rooftop seawall beach_dusk town_night shrine bunker
-  infirmary fog sea_gate title white black`.
+  `VNArtImporter` enforces the import settings the game depends on (Sprite, **Single**, Full
+  Rect, alpha-is-transparency, bottom pivot for full bodies) on *every* import, not just the
+  first — `Resources.Load<Sprite>` returns null for a Multiple-mode texture, which silently
+  empties the entire cast. Adding a sprite set is a folder copy plus one `@char` line.
+
+  `v1-schoolgirl`'s dialogue portraits are **not** the ones the generator produced — 10 of
+  the 12 came back with an opaque inset reference panel showing a different face, with the
+  real figure pushed out of frame. They were rebuilt locally as head-and-shoulders crops of
+  the matching (clean) expression sheets, which guarantees the same character and the same
+  expression per frame. Regenerating them upstream would replace these.
+- **Backgrounds** — a painted `Assets/VN/Resources/VN/Backgrounds/<name>.png` is used when
+  present; otherwise the name falls back to a procedural palette rendered at runtime, so
+  every scene always has art. Scene names in use: `classroom hallway rooftop seawall
+  beach_dusk town_night inn_room bunker fog sea_gate title white black`, plus the unused
+  palettes `shrine` and `infirmary`.
+
+  Currently painted: `fog seawall town_night classroom hallway inn_room`.
+
+  Deliberately still procedural, because the available paintings clash with the cast —
+  the background set is European fantasy-town while the cast is a modern Japanese school
+  uniform and white sci-fi power armour: `beach_dusk` (pastel cherry-blossom bridge against
+  Mira's armour), `title` (a European clock tower misrepresents Kanamori Bay), `rooftop`
+  (only a night version exists; the scene is a clear morning), `sea_gate` and `bunker` (no
+  equivalent), and `white`/`black` (flat by design). The procedural palettes are
+  style-neutral, so they never fight the sprites.
 - **Audio** is synthesised: `@bgm <name>` builds a seamless pad from a hash of the name and
   `@sfx <name>` picks from a small set (`click chime impact whoosh wave signal`). Real clips
   in `Assets/VN/Resources/VN/Audio/BGM/` or `/SFX/` take precedence over both.

@@ -1,0 +1,4 @@
+repository "Visual Novel/Visual Novel@18967699263155@cloud"
+  path "/"
+    br "/main"
+    co "/main"

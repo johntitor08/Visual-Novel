@@ -147,27 +147,34 @@ namespace VN
                 rt.pivot = new Vector2(0.5f, 0f);
                 float h = 1120f;
                 rt.sizeDelta = new Vector2(h * (art.rect.width / art.rect.height), h);
-                rt.anchoredPosition = new Vector2(430f, -60f);
+                // At +430 the sprite starts ~7px after the longest title line ends. Pushed
+                // right so a slightly wider font face cannot collide with the title.
+                rt.anchoredPosition = new Vector2(520f, -60f);
             }
 
-            var vignette = UIKit.Img("LeftShade", root, VNTextures.Solid(), new Color(0.03f, 0.04f, 0.07f, 0.55f));
-            UIKit.Stretch(vignette.rectTransform, 0f, 980f, 0f, 0f);
+            // A soft horizontal falloff rather than a hard-edged slab, which showed as a
+            // visible vertical seam once the background became painted art.
+            var vignette = UIKit.Img("LeftShade", root, VNTextures.SideFade(), new Color(0.02f, 0.03f, 0.06f, 0.86f));
+            UIKit.Stretch(vignette.rectTransform, 0f, 770f, 0f, 0f);
 
-            var title = UIKit.Text("Title", root, "WHERE THE\nSIGNAL ENDS", VNTheme.SizeTitle, VNTheme.Ink,
+            // The box has to be wide enough for "SIGNAL ENDS" to stay on one line; at 900px
+            // it wrapped to a third line and ran straight through the menu below.
+            var title = UIKit.Text("Title", root, "WHERE THE\nSIGNAL ENDS", 116f, VNTheme.Ink,
                 TextAlignmentOptions.TopLeft, true);
             title.rectTransform.anchorMin = new Vector2(0f, 1f);
             title.rectTransform.anchorMax = new Vector2(0f, 1f);
             title.rectTransform.pivot = new Vector2(0f, 1f);
-            title.rectTransform.anchoredPosition = new Vector2(140f, -170f);
-            title.rectTransform.sizeDelta = new Vector2(900f, 340f);
+            title.rectTransform.anchoredPosition = new Vector2(140f, -140f);
+            title.rectTransform.sizeDelta = new Vector2(1150f, 300f);
             title.characterSpacing = 6f;
-            title.lineSpacing = -14f;
+            title.lineSpacing = -10f;
+            title.textWrappingMode = TextWrappingModes.NoWrap;
 
             var rule = UIKit.Img("Rule", root, VNTextures.Solid(), VNTheme.Accent);
             rule.rectTransform.anchorMin = new Vector2(0f, 1f);
             rule.rectTransform.anchorMax = new Vector2(0f, 1f);
             rule.rectTransform.pivot = new Vector2(0f, 1f);
-            rule.rectTransform.anchoredPosition = new Vector2(146f, -520f);
+            rule.rectTransform.anchoredPosition = new Vector2(146f, -460f);
             rule.rectTransform.sizeDelta = new Vector2(180f, 5f);
 
             var tag = UIKit.Text("Tagline", root, "Kanamori Bay  ·  three days before the town is closed",
@@ -175,18 +182,18 @@ namespace VN
             tag.rectTransform.anchorMin = new Vector2(0f, 1f);
             tag.rectTransform.anchorMax = new Vector2(0f, 1f);
             tag.rectTransform.pivot = new Vector2(0f, 1f);
-            tag.rectTransform.anchoredPosition = new Vector2(146f, -556f);
-            tag.rectTransform.sizeDelta = new Vector2(820f, 60f);
+            tag.rectTransform.anchoredPosition = new Vector2(146f, -496f);
+            tag.rectTransform.sizeDelta = new Vector2(820f, 50f);
 
             var menu = UIKit.Rect("Menu", root);
             menu.anchorMin = new Vector2(0f, 0f);
             menu.anchorMax = new Vector2(0f, 0f);
             menu.pivot = new Vector2(0f, 0f);
-            menu.anchoredPosition = new Vector2(146f, 210f);
+            menu.anchoredPosition = new Vector2(146f, 150f);
             menu.sizeDelta = new Vector2(420f, 100f);
 
             var layout = menu.gameObject.AddComponent<VerticalLayoutGroup>();
-            layout.spacing = 14f;
+            layout.spacing = 12f;
             layout.childAlignment = TextAnchor.LowerLeft;
             layout.childControlWidth = true;
             layout.childControlHeight = true;
@@ -205,7 +212,7 @@ namespace VN
             _progress.rectTransform.anchorMin = new Vector2(0f, 0f);
             _progress.rectTransform.anchorMax = new Vector2(0f, 0f);
             _progress.rectTransform.pivot = new Vector2(0f, 0f);
-            _progress.rectTransform.anchoredPosition = new Vector2(146f, 120f);
+            _progress.rectTransform.anchoredPosition = new Vector2(146f, 96f);
             _progress.rectTransform.sizeDelta = new Vector2(760f, 40f);
 
             root.gameObject.SetActive(false);
@@ -215,9 +222,9 @@ namespace VN
 
         Button AddItem(Transform parent, string label, Action onClick, bool primary)
         {
-            var btn = UIKit.Btn("Menu_" + label, parent, label, new Vector2(420f, 68f), onClick, 32f, primary);
+            var btn = UIKit.Btn("Menu_" + label, parent, label, new Vector2(420f, 62f), onClick, 32f, primary);
             var le = btn.gameObject.AddComponent<LayoutElement>();
-            le.preferredHeight = 68f;
+            le.preferredHeight = 62f;
             le.preferredWidth = 420f;
             var t = UIKit.LabelOf(btn);
             if (t != null) t.alignment = TextAlignmentOptions.Left;
@@ -362,30 +369,34 @@ namespace VN
             var le = row.gameObject.AddComponent<LayoutElement>();
             le.preferredHeight = 74f;
 
+            // The row is 848 wide inside the card. Label | slider | readout have to tile it
+            // without touching: 0-320, 330-680, 688-848.
             var name = UIKit.Text("Label", row, label, 30f, VNTheme.Ink, TextAlignmentOptions.Left);
             name.rectTransform.anchorMin = new Vector2(0f, 0f);
             name.rectTransform.anchorMax = new Vector2(0f, 1f);
             name.rectTransform.pivot = new Vector2(0f, 0.5f);
             name.rectTransform.anchoredPosition = new Vector2(0f, 0f);
-            name.rectTransform.sizeDelta = new Vector2(330f, 0f);
+            name.rectTransform.sizeDelta = new Vector2(320f, 0f);
 
             var readout = UIKit.Text("Value", row, format(value), 28f, VNTheme.Accent, TextAlignmentOptions.Right);
             readout.rectTransform.anchorMin = new Vector2(1f, 0f);
             readout.rectTransform.anchorMax = new Vector2(1f, 1f);
             readout.rectTransform.pivot = new Vector2(1f, 0.5f);
             readout.rectTransform.anchoredPosition = new Vector2(0f, 0f);
-            readout.rectTransform.sizeDelta = new Vector2(190f, 0f);
+            readout.rectTransform.sizeDelta = new Vector2(160f, 0f);
+            readout.textWrappingMode = TextWrappingModes.NoWrap;
 
             var slider = UIKit.MakeSlider("Slider", row, min, max, value, v =>
             {
                 onChange(v);
                 readout.text = format(v);
             });
-            slider.GetComponent<RectTransform>().anchorMin = new Vector2(0f, 0.5f);
-            slider.GetComponent<RectTransform>().anchorMax = new Vector2(0f, 0.5f);
-            slider.GetComponent<RectTransform>().pivot = new Vector2(0f, 0.5f);
-            slider.GetComponent<RectTransform>().anchoredPosition = new Vector2(340f, 0f);
-            slider.GetComponent<RectTransform>().sizeDelta = new Vector2(400f, 30f);
+            var sliderRt = slider.GetComponent<RectTransform>();
+            sliderRt.anchorMin = new Vector2(0f, 0.5f);
+            sliderRt.anchorMax = new Vector2(0f, 0.5f);
+            sliderRt.pivot = new Vector2(0f, 0.5f);
+            sliderRt.anchoredPosition = new Vector2(330f, 0f);
+            sliderRt.sizeDelta = new Vector2(350f, 30f);
         }
     }
 

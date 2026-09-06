@@ -157,7 +157,9 @@ namespace VN
             _menuBar.anchorMax = new Vector2(1f, 1f);
             _menuBar.pivot = new Vector2(1f, 1f);
             _menuBar.anchoredPosition = new Vector2(-40f, -28f);
-            _menuBar.sizeDelta = new Vector2(880f, 56f);
+            // Seven buttons come to 956px plus spacing; a narrower box makes the row
+            // overflow its own rect and the labels drift out of their pills.
+            _menuBar.sizeDelta = new Vector2(1000f, 56f);
 
             var layout = _menuBar.gameObject.AddComponent<HorizontalLayoutGroup>();
             layout.spacing = 10f;

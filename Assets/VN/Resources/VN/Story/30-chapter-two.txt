@@ -208,11 +208,10 @@ I walked back through a town with three hundred houses and four lights on. Somew
 @jump ch3_open
 
 :: ch2_note
+@bg inn_room fade=1.0
 There was a note under my door at the inn, in a hand that used a fountain pen for absolutely no reason.
 
-@bg white fade=0.4
 @wait 0.3
-@bg town_night fade=0.4
 "Rooftop. Seven. Bring the ledger, and don't read the M's without me. — R."
 
 @set kept_ledger += 1

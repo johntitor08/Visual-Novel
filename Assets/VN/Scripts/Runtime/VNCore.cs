@@ -194,6 +194,25 @@ namespace VN
             });
         }
 
+        /// <summary>Horizontal fade, opaque at the left. Keeps title text legible over painted art.</summary>
+        public static Sprite SideFade()
+        {
+            return Get("sfade", () =>
+            {
+                const int W = 128;
+                var t = NewTex(W, 4);
+                var px = new Color[W * 4];
+                for (int x = 0; x < W; x++)
+                {
+                    float a = 1f - Mathf.Clamp01(x / (float)(W - 1));
+                    a = a * a;
+                    for (int y = 0; y < 4; y++) px[y * W + x] = new Color(1f, 1f, 1f, a);
+                }
+                t.SetPixels(px); t.Apply();
+                return Sprite.Create(t, new Rect(0, 0, W, 4), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect);
+            });
+        }
+
         static Texture2D NewTex(int w, int h)
         {
             var t = new Texture2D(w, h, TextureFormat.RGBA32, false);
