@@ -182,6 +182,20 @@ namespace VN
     {
         public const int SlotCount = 8;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+        [System.Runtime.InteropServices.DllImport("__Internal")]
+        static extern void VN_SyncFS();
+
+        /// <summary>Makes the last write durable in the browser (see VNWebGL.jslib).</summary>
+        static void Flush()
+        {
+            try { VN_SyncFS(); }
+            catch (Exception e) { Debug.LogWarning("[VN] Could not sync saves to IndexedDB: " + e.Message); }
+        }
+#else
+        static void Flush() { }
+#endif
+
         static string Dir
         {
             get
@@ -203,6 +217,7 @@ namespace VN
             {
                 data.savedAtUtc = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
                 File.WriteAllText(SlotPath(slot), JsonUtility.ToJson(data, true), Encoding.UTF8);
+                Flush();
             }
             catch (Exception e)
             {
@@ -227,7 +242,7 @@ namespace VN
 
         public static void Delete(int slot)
         {
-            try { if (File.Exists(SlotPath(slot))) File.Delete(SlotPath(slot)); }
+            try { if (File.Exists(SlotPath(slot))) { File.Delete(SlotPath(slot)); Flush(); } }
             catch (Exception e) { Debug.LogWarning("[VN] Could not delete save slot " + slot + ": " + e.Message); }
         }
 
@@ -260,7 +275,7 @@ namespace VN
 
         public static void WriteGlobal(VNGlobalData g)
         {
-            try { File.WriteAllText(GlobalPath, JsonUtility.ToJson(g, true), Encoding.UTF8); }
+            try { File.WriteAllText(GlobalPath, JsonUtility.ToJson(g, true), Encoding.UTF8); Flush(); }
             catch (Exception e) { Debug.LogWarning("[VN] Could not write global data: " + e.Message); }
         }
 

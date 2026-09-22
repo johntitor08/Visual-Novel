@@ -145,11 +145,14 @@ namespace VN
                 rt.anchorMin = new Vector2(0.5f, 0f);
                 rt.anchorMax = new Vector2(0.5f, 0f);
                 rt.pivot = new Vector2(0.5f, 0f);
-                float h = 1120f;
+                // Framed as a cropped foreground figure rather than a full body standing on
+                // the plate. The title art is a hillside seen from above, so its lower edge
+                // is rooftops -- a full figure there stands on the roofs. Oversizing her and
+                // letting the bottom edge cut across the thigh removes the ground contact
+                // entirely, which is the usual visual-novel title composition anyway.
+                float h = 1520f;
                 rt.sizeDelta = new Vector2(h * (art.rect.width / art.rect.height), h);
-                // At +430 the sprite starts ~7px after the longest title line ends. Pushed
-                // right so a slightly wider font face cannot collide with the title.
-                rt.anchoredPosition = new Vector2(520f, -60f);
+                rt.anchoredPosition = new Vector2(560f, -480f);
             }
 
             // A soft horizontal falloff rather than a hard-edged slab, which showed as a
@@ -159,16 +162,25 @@ namespace VN
 
             // The box has to be wide enough for "SIGNAL ENDS" to stay on one line; at 900px
             // it wrapped to a third line and ran straight through the menu below.
-            var title = UIKit.Text("Title", root, "WHERE THE\nSIGNAL ENDS", 116f, VNTheme.Ink,
-                TextAlignmentOptions.TopLeft, true);
-            title.rectTransform.anchorMin = new Vector2(0f, 1f);
-            title.rectTransform.anchorMax = new Vector2(0f, 1f);
-            title.rectTransform.pivot = new Vector2(0f, 1f);
-            title.rectTransform.anchoredPosition = new Vector2(140f, -140f);
-            title.rectTransform.sizeDelta = new Vector2(1150f, 300f);
-            title.characterSpacing = 6f;
-            title.lineSpacing = -10f;
-            title.textWrappingMode = TextWrappingModes.NoWrap;
+            // The side shade has all but faded out by the end of the longest line, which on a
+            // bright plate leaves "ENDS" sitting on open sky. A shadow copy keeps the title
+            // legible whatever background art is dropped in behind it.
+            const string TitleText = "WHERE THE\nSIGNAL ENDS";
+            for (int pass = 0; pass < 2; pass++)
+            {
+                bool shadow = pass == 0;
+                var t = UIKit.Text(shadow ? "TitleShadow" : "Title", root, TitleText, 116f,
+                    shadow ? new Color(0.02f, 0.03f, 0.06f, 0.62f) : VNTheme.Ink,
+                    TextAlignmentOptions.TopLeft, true);
+                t.rectTransform.anchorMin = new Vector2(0f, 1f);
+                t.rectTransform.anchorMax = new Vector2(0f, 1f);
+                t.rectTransform.pivot = new Vector2(0f, 1f);
+                t.rectTransform.anchoredPosition = new Vector2(shadow ? 145f : 140f, shadow ? -146f : -140f);
+                t.rectTransform.sizeDelta = new Vector2(1150f, 300f);
+                t.characterSpacing = 6f;
+                t.lineSpacing = -10f;
+                t.textWrappingMode = TextWrappingModes.NoWrap;
+            }
 
             var rule = UIKit.Img("Rule", root, VNTextures.Solid(), VNTheme.Accent);
             rule.rectTransform.anchorMin = new Vector2(0f, 1f);
@@ -206,7 +218,9 @@ namespace VN
             _continueBtn = AddItem(menu, "Continue", () => Fire(OnContinue), false);
             AddItem(menu, "Load", () => Fire(OnLoad), false);
             AddItem(menu, "Settings", () => Fire(OnSettings), false);
-            AddItem(menu, "Quit", () => Fire(OnQuit), false);
+            // Application.Quit is a no-op in a browser; a Quit button there would just do nothing.
+            if (Application.platform != RuntimePlatform.WebGLPlayer)
+                AddItem(menu, "Quit", () => Fire(OnQuit), false);
 
             _progress = UIKit.Text("Progress", root, "", VNTheme.SizeSmall, VNTheme.InkDim, TextAlignmentOptions.BottomLeft);
             _progress.rectTransform.anchorMin = new Vector2(0f, 0f);

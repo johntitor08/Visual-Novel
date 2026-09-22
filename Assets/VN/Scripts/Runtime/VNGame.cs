@@ -125,6 +125,16 @@ namespace VN
             Choices = VNChoiceMenu.Build(root);
             ChapterCard = VNChapterCard.Build(root);
 
+            // The title is the base of the screen stack, so it is built before the modal
+            // screens: uGUI draws later siblings on top, and a title built after them sits
+            // over Load and Settings, opening them invisibly behind its own full-screen art.
+            _title = VNTitleScreen.Build(root);
+            _title.OnNewGame = NewGame;
+            _title.OnContinue = ContinueLatest;
+            _title.OnLoad = () => _saves.Open(false);
+            _title.OnSettings = () => _settings.Open();
+            _title.OnQuit = Quit;
+
             _backlog = VNBacklogScreen.Build(root);
             _backlog.OnClosed = () => { };
 
@@ -139,13 +149,6 @@ namespace VN
 
             _ending = VNEndingCard.Build(root);
             _ending.OnDismiss = () => StartCoroutine(OpenTitle(false));
-
-            _title = VNTitleScreen.Build(root);
-            _title.OnNewGame = NewGame;
-            _title.OnContinue = ContinueLatest;
-            _title.OnLoad = () => _saves.Open(false);
-            _title.OnSettings = () => _settings.Open();
-            _title.OnQuit = Quit;
 
             Fader = VNFader.Build(root);
         }

@@ -74,6 +74,7 @@ namespace VN
         {
             var next = VNProcBg.Get(name);
             CurrentBackground = name;
+            Relayout();
             if (next == null) yield break;
 
             if (fade <= 0.01f || _bgA.sprite == null)
@@ -103,6 +104,7 @@ namespace VN
         {
             var s = VNProcBg.Get(name);
             CurrentBackground = name;
+            Relayout();
             if (s == null) return;
             _bgA.sprite = s;
             _bgA.color = Color.white;
@@ -112,7 +114,11 @@ namespace VN
 
         // ---------------------------------------------------------------- characters
 
-        static float SlotX(string slot)
+        VNGround Ground { get { return VNSceneLayout.For(CurrentBackground); } }
+
+        float ActorHeight { get { return CharHeight * Ground.scale; } }
+
+        static float SlotBase(string slot)
         {
             switch ((slot ?? "center").ToLowerInvariant())
             {
@@ -125,6 +131,8 @@ namespace VN
                 default:         return 0f;
             }
         }
+
+        float SlotX(string slot) { return SlotBase(slot) * Ground.spread; }
 
         public Actor Find(string id)
         {
@@ -170,12 +178,12 @@ namespace VN
 
             bool spriteChanged = actor.image.sprite != sprite;
             ApplySprite(actor, sprite);
-            actor.rt.anchoredPosition = new Vector2(SlotX(actor.slot), -24f);
+            actor.rt.anchoredPosition = new Vector2(SlotX(actor.slot), Ground.y);
 
             if (isNew)
             {
                 // New arrivals rise a little as they fade in.
-                float from = -70f, to = -24f;
+                float to = Ground.y, from = to - 46f;
                 for (float t = 0f; t < fade; t += Time.deltaTime)
                 {
                     float k = VNEase.OutCubic(t / Mathf.Max(0.0001f, fade));
@@ -207,7 +215,23 @@ namespace VN
         {
             actor.image.sprite = sprite;
             float aspect = sprite.rect.width / Mathf.Max(1f, sprite.rect.height);
-            actor.rt.sizeDelta = new Vector2(CharHeight * aspect, CharHeight);
+            float h = ActorHeight;
+            actor.rt.sizeDelta = new Vector2(h * aspect, h);
+        }
+
+        /// <summary>
+        /// Re-seats everyone for the current background. A scene change moves the floor line
+        /// and the sense of scale, so actors already on stage have to follow it.
+        /// </summary>
+        void Relayout()
+        {
+            foreach (var kv in _actors)
+            {
+                var a = kv.Value;
+                if (a.rt == null || a.image == null || a.image.sprite == null) continue;
+                ApplySprite(a, a.image.sprite);
+                a.rt.anchoredPosition = new Vector2(SlotX(a.slot), Ground.y);
+            }
         }
 
         public IEnumerator Hide(string id, float fade)

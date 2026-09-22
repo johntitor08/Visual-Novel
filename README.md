@@ -115,6 +115,17 @@ character and missing sprite file, and reports the ending count against `VNEndin
   python vn_bg_gen.py k-rooftop            # one scene
   python vn_bg_gen.py seed=1234 k-seawall  # re-roll it
   ```
+- **Staging** is per scene, in the `VNSceneLayout` table in `VNCore.cs`. Each background
+  gets a floor line (`y`), a character `scale` and a `spread` that narrows the slot offsets.
+  A fixed sprite size and a fixed `y` cannot serve every plate: a corridor receding to a
+  vanishing point needs a smaller figure than an open beach, and the seawall has a railing
+  that the outer slots would otherwise put an actor behind — which is exactly how a
+  character ends up floating or standing on the scenery. Scenes with no entry fall back to
+  `y=-24, scale=1, spread=1`, which is right for the flat `white`/`black` transition plates.
+
+  This only means anything because every full-body frame shares one foot line: the
+  generator leaves 0-42px of transparent padding under the feet, so the frames were shifted
+  to end exactly at the canvas bottom. Re-importing raw art will reintroduce the drift.
 - **Audio** is synthesised: `@bgm <name>` builds a seamless pad from a hash of the name and
   `@sfx <name>` picks from a small set (`click chime impact whoosh wave signal`). Real clips
   in `Assets/VN/Resources/VN/Audio/BGM/` or `/SFX/` take precedence over both.

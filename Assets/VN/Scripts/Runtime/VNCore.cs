@@ -393,6 +393,53 @@ namespace VN
         }
     }
 
+    /// <summary>Where the floor is in one background, and how big a person is standing on it.</summary>
+    public struct VNGround
+    {
+        public float y;        // actor rect bottom, in reference px from the screen bottom
+        public float scale;    // multiplier on the base character height
+        public float spread;   // multiplier on the slot offsets, to keep actors over walkable ground
+
+        public VNGround(float y, float scale, float spread)
+        {
+            this.y = y; this.scale = scale; this.spread = spread;
+        }
+    }
+
+    /// <summary>
+    /// Per-scene staging. Every plate has its own floor line and its own sense of scale:
+    /// a corridor that recedes to a vanishing point cannot take the same sprite size as an
+    /// open beach, and a seawall has a railing that the outer slots would otherwise put an
+    /// actor behind. Without this the stage plants everyone at one fixed y and one fixed
+    /// height, which reads as the character floating or standing on the scenery.
+    /// </summary>
+    public static class VNSceneLayout
+    {
+        static readonly VNGround Default = new VNGround(-24f, 1.00f, 1.00f);
+
+        static readonly Dictionary<string, VNGround> Table =
+            new Dictionary<string, VNGround>(StringComparer.OrdinalIgnoreCase)
+        {
+            //                              y      scale  spread
+            { "fog",        new VNGround(-24f,  0.98f, 0.95f) },  // jetty runs to the frame edge
+            { "seawall",    new VNGround(-24f,  0.92f, 0.45f) },  // narrow walkway; a railing either side
+            { "beach_dusk", new VNGround(-24f,  0.98f, 1.00f) },  // open sand
+            { "hallway",    new VNGround(-24f,  0.80f, 0.60f) },  // deep corridor, doors for scale
+            { "classroom",  new VNGround(-10f,  0.82f, 0.70f) },  // stands between the desks
+            { "rooftop",    new VNGround(-24f,  0.92f, 0.85f) },  // open deck
+            { "town_night", new VNGround(-24f,  0.78f, 0.80f) },  // two storey houses set the scale
+            { "sea_gate",   new VNGround(-24f,  1.00f, 0.90f) },  // surreal; keep the figure large
+            { "bunker",     new VNGround(-24f,  0.82f, 0.60f) },  // corridor, bulkhead doors for scale
+            { "inn_room",   new VNGround(-24f,  0.80f, 0.55f) },  // small room, bed in the middle
+        };
+
+        public static VNGround For(string background)
+        {
+            VNGround g;
+            return background != null && Table.TryGetValue(background, out g) ? g : Default;
+        }
+    }
+
     /// <summary>Resource lookups with caching and quiet failure -- a missing sprite must never stop the script.</summary>
     public static class VNAssets
     {

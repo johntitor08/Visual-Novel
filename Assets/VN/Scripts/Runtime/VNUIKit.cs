@@ -33,8 +33,14 @@ namespace VN
                                  "Run Window > TextMeshPro > Import TMP Essential Resources.");
             }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+            // A browser exposes no OS font directory, so there is nothing to look up.
+            _body = fallback;
+            _display = fallback;
+#else
             _body = TryOsFont("Segoe UI") ?? fallback;
             _display = TryOsFont("Segoe UI Semibold") ?? TryOsFont("Segoe UI") ?? fallback;
+#endif
         }
 
         static TMP_FontAsset TryOsFont(string faceName)
