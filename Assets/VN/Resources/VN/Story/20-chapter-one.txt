@@ -109,6 +109,9 @@ Rin @04-sad: And then you throw the list away.
 :: ch1_official
 You: The Ministry logged it as harbour survey work. Sonar, on a fixed schedule.
 
+It was the Ministry's sentence and I said it in the Ministry's voice, which is a thing you learn without deciding to. Two days later somebody in white armour would hear that cadence and take me for one of hers.
+@set trust_mira += 1
+
 @show rin expr=12-smug fade=0.3
 Rin @12-smug: Sonar. On a fixed schedule. Through a hillside, into a filing cabinet, and out again.
 

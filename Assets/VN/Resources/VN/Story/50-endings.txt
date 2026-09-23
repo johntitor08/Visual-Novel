@@ -76,6 +76,15 @@ At 14:00 the bay made a sound like a door being shut by someone who is angry but
 
 Ninety-five names went into the gate with the water. Rin never let go of the book.
 
+@if left_town >= 1 -> end_ledger_outside
+We had finished it at the window of a building that was not supposed to still have anyone in it.
+@jump end_ledger_after
+
+:: end_ledger_outside
+We had finished it behind the cones, on a Ministry table, under a light that belonged to somebody else. It counted the same. That was the whole argument, in the end.
+
+:: end_ledger_after
+
 Rin @04-sad: They're gone.
 
 You: The register isn't.

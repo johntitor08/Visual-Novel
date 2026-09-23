@@ -138,6 +138,23 @@ Mira @05-angry: Which brings me to you. Both of you. Off the coast road by Wedne
 > Agree to leave -> ch2_agree
 > Refuse -> ch2_refuse
 > Ask her what she loses -> ch2_ask_cost
+> [knows_signal >= 1] Tell her what you think is under the bay -> ch2_tell
+
+:: ch2_tell
+You: It isn't sonar and it isn't salvage. It's reading the town. Every four hours it takes a line and keeps it.
+
+@show mira expr=06-surprised fade=0.3
+Mira @06-surprised: Say that again.
+
+You: It's reading the town.
+
+@show mira expr=09-thinking fade=0.5
+Mira @09-thinking: Nobody above my rank has said that sentence out loud. Two people below it have, and both of them are on the list now.
+
+@set trust_mira += 3
+@set knows_signal += 1
+Mira @01-neutral: Wednesday noon still stands, clerk. But you can stop calling it harbour work. So will I.
+@jump ch2_night
 
 :: ch2_agree
 You: Wednesday noon. Understood.
@@ -171,6 +188,7 @@ You: I can try. Trying is most of what filing is.
 Mira @09-thinking: ...
 
 @set trust_rin += 1
+@set trust_mira += 1
 Mira @01-neutral: That was almost a good answer. Don't do it again where my lieutenant can hear.
 @jump ch2_night
 
