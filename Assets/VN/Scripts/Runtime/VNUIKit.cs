@@ -33,13 +33,15 @@ namespace VN
                                  "Run Window > TextMeshPro > Import TMP Essential Resources.");
             }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-            // A browser exposes no OS font directory, so there is nothing to look up.
-            _body = fallback;
-            _display = fallback;
-#else
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+            // Segoe UI ships with Windows and nowhere else. Asking for it on Linux or in a
+            // browser only produces "Unable to load font face" in the log before falling
+            // back anyway, so those platforms go straight to the packaged font.
             _body = TryOsFont("Segoe UI") ?? fallback;
             _display = TryOsFont("Segoe UI Semibold") ?? TryOsFont("Segoe UI") ?? fallback;
+#else
+            _body = fallback;
+            _display = fallback;
 #endif
         }
 

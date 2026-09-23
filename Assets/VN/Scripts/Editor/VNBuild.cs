@@ -1,4 +1,4 @@
-// VNBuild.cs -- one-click / headless Web build using the project's Web build profile.
+// VNBuild.cs -- one-click / headless builds from the project's build profiles.
 using System;
 using System.IO;
 using UnityEditor;
@@ -10,44 +10,70 @@ namespace VNEditor
 {
     public static class VNBuild
     {
-        const string ProfilePath = "Assets/Settings/Build Profiles/Web.asset";
-        const string OutputDir = "Builds/Web";
+        const string ProfileDir = "Assets/Settings/Build Profiles/";
+
+        const string WebProfile = ProfileDir + "Web.asset";
+        const string WebOutput = "Builds/Web";
+
+        const string LinuxProfile = ProfileDir + "Linux.asset";
+        const string LinuxOutput = "Builds/Linux";
+        const string LinuxExecutable = "WhereTheSignalEnds.x86_64";
 
         [MenuItem("Visual Novel/Build Web", priority = 40)]
         public static void BuildWebMenu()
         {
-            if (BuildWeb())
-                EditorUtility.RevealInFinder(Path.GetFullPath(OutputDir));
+            if (Build(WebProfile, WebOutput, WebOutput))
+                EditorUtility.RevealInFinder(Path.GetFullPath(WebOutput));
+        }
+
+        [MenuItem("Visual Novel/Build Linux", priority = 41)]
+        public static void BuildLinuxMenu()
+        {
+            if (Build(LinuxProfile, LinuxOutput, Path.Combine(LinuxOutput, LinuxExecutable)))
+                EditorUtility.RevealInFinder(Path.GetFullPath(LinuxOutput));
         }
 
         /// <summary>
-        /// Entry point for:
-        ///   Unity -batchmode -buildTarget WebGL -projectPath ... -executeMethod VNEditor.VNBuild.BuildWebBatch
-        /// Exits with 0 on success so a script can tell the two apart.
+        /// Headless entry points, e.g.
+        ///   Unity -batchmode -buildTarget WebGL   -projectPath ... -executeMethod VNEditor.VNBuild.BuildWebBatch
+        ///   Unity -batchmode -buildTarget Linux64 -projectPath ... -executeMethod VNEditor.VNBuild.BuildLinuxBatch
+        /// Both exit with 0 on success so a script can tell the outcomes apart.
         /// </summary>
         public static void BuildWebBatch()
         {
+            Exit(() => Build(WebProfile, WebOutput, WebOutput));
+        }
+
+        public static void BuildLinuxBatch()
+        {
+            Exit(() => Build(LinuxProfile, LinuxOutput, Path.Combine(LinuxOutput, LinuxExecutable)));
+        }
+
+        static void Exit(Func<bool> build)
+        {
             bool ok = false;
-            try { ok = BuildWeb(); }
-            catch (Exception e) { Debug.LogError("[VN] Web build threw: " + e); }
+            try { ok = build(); }
+            catch (Exception e) { Debug.LogError("[VN] Build threw: " + e); }
             EditorApplication.Exit(ok ? 0 : 1);
         }
 
-        static bool BuildWeb()
+        /// <param name="outputDir">Folder that receives the player.</param>
+        /// <param name="location">What BuildPlayer is pointed at: the folder for Web, the executable for standalone.</param>
+        static bool Build(string profilePath, string outputDir, string location)
         {
-            var profile = AssetDatabase.LoadAssetAtPath<BuildProfile>(ProfilePath);
+            var profile = AssetDatabase.LoadAssetAtPath<BuildProfile>(profilePath);
             if (profile == null)
             {
-                Debug.LogError("[VN] Build profile not found at " + ProfilePath);
+                Debug.LogError("[VN] Build profile not found at " + profilePath);
                 return false;
             }
 
-            Directory.CreateDirectory(OutputDir);
+            Directory.CreateDirectory(outputDir);
 
             var options = new BuildPlayerWithProfileOptions
             {
                 buildProfile = profile,
-                locationPathName = OutputDir,
+                locationPathName = location,
                 options = BuildOptions.None
             };
 
@@ -56,10 +82,10 @@ namespace VNEditor
             var summary = report.summary;
 
             Debug.Log(string.Format(
-                "[VN] Web build {0}: {1} error(s), {2} warning(s), {3:0.0} MB, {4:0}s -> {5}",
-                summary.result, summary.totalErrors, summary.totalWarnings,
-                summary.totalSize / (1024.0 * 1024.0), (DateTime.Now - started).TotalSeconds,
-                Path.GetFullPath(OutputDir)));
+                "[VN] {0} build {1}: {2} error(s), {3} warning(s), {4:0.0} MB, {5:0}s -> {6}",
+                Path.GetFileNameWithoutExtension(profilePath), summary.result, summary.totalErrors,
+                summary.totalWarnings, summary.totalSize / (1024.0 * 1024.0),
+                (DateTime.Now - started).TotalSeconds, Path.GetFullPath(outputDir)));
 
             return summary.result == BuildResult.Succeeded;
         }
