@@ -46,6 +46,18 @@ Rin @01-neutral: That's what's left. Ninety-five people whose last official act 
 @show mira expr=04-sad fade=0.3
 Mira @04-sad: I know what a name costs. Better than you think.
 
+@if mira_names == 1 -> ch3_mira_glove
+@if mira_names == 2 -> ch3_mira_friday
+@jump ch3_unless
+
+:: ch3_mira_glove
+There were two names on the back of her glove, gone faint at the knuckles. She checked them without looking down, the way you pat a pocket for your keys.
+@jump ch3_unless
+
+:: ch3_mira_friday
+She didn't look at me when she said it. Two names, on Friday. We both knew what "if there's a Friday" had meant.
+
+:: ch3_unless
 Mira @01-neutral: But the gate closes at 14:00 whether your book is finished or not, and everything above the waterline needs to be behind those cones when it does.
 
 @wait 0.5
@@ -194,7 +206,7 @@ Mira @04-sad: No, you don't. Nobody does. That's what makes it work.
 @bgm tense
 @bg bunker fade=1.4
 
-At 13:40 the town went quiet in a way that had nothing to do with sound. It was the quiet of a room where someone has stopped waiting for you to say something.
+At 13:40 on Thursday the town went quiet in a way that had nothing to do with sound. It was the quiet of a room where someone has stopped waiting for you to say something.
 
 @wait 0.4
 @if read_aloud >= 1 -> ending_signal_intro

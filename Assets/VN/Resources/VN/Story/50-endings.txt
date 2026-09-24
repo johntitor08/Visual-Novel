@@ -32,6 +32,19 @@ Rin @11-crying: Present.
 @wait 0.4
 Four hundred and six of them, with the times and the transfers and the aunts. Ninety-five that had no line yet, read out anyway, with the space described out loud so the space was also a fact.
 
+@if mira_names == 1 -> end_signal_glove
+@if mira_names == 2 -> end_signal_friday
+@jump end_signal_on
+
+:: end_signal_glove
+And before any of them, two that were not in the book. Mira said them with me, off the back of her glove.
+@jump end_signal_on
+
+:: end_signal_friday
+And before any of them, two that were not in the book. It was not Friday. Mira did not stop me.
+
+:: end_signal_on
+
 And at 13:58, in the middle of the M's, the sound stopped.
 
 @flash #FFFFFF 0.9
@@ -160,6 +173,25 @@ Here is what nobody warns you about a gate that reads: when it closes, you get e
 @face mira 04-sad
 Mira @04-sad: Two of my people came back. Walked out of the shaft at 14:20 arguing about a football result.
 
+@if mira_names == 1 -> end_gate_glove
+@if mira_names == 2 -> end_gate_friday
+@jump end_gate_book
+
+:: end_gate_glove
+@show mira expr=02-smile fade=0.4
+Mira @02-smile: Reyes and Kimura. I had them before they reached the top of the ladder. It was on the back of my glove.
+@jump end_gate_book
+
+:: end_gate_friday
+Mira @01-neutral: It's Friday, clerk. I checked twice.
+
+You: Tomas Reyes. Ada Kimura.
+
+@show mira expr=02-smile fade=0.4
+Mira @02-smile: ...They told me themselves at 14:20. You're still late.
+
+:: end_gate_book
+@show mira expr=08-worried fade=0.35
 Mira @08-worried: And there's a book I can't remember the contents of, and a girl in class two I know I owe something to, and no way at all to find out what.
 
 You: Four hundred and six.

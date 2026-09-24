@@ -222,6 +222,148 @@ Mira @11-crying: I don't know. That's what I've been standing in the sea about.
 
 I walked back through a town with three hundred houses and four lights on. Somewhere behind me a machine the size of a shipping lane was very patiently reading a bus timetable.
 
+@if trust_mira >= 3 -> ch2_mira
+@jump ch2_home
+
+:: ch2_mira
+@wait 0.4
+One of the four lights was a vending machine outside the harbour office, and in front of it, on the kerb, in a hundred kilos of armour, sat the only other person awake in Kanamori.
+
+@show mira at=center pose=12-sitting fade=0.9
+@face mira 09-thinking
+She had her helmet upside down on her knees, and she was reading the inside of it by the light of a machine that sold nothing but corn soup.
+
+@show mira expr=06-surprised fade=0.3
+Mira @06-surprised: Clerk.
+
+@show mira expr=01-neutral fade=0.3
+Mira @01-neutral: I'm off duty. That means I'm allowed to sit on a kerb, and you're allowed not to mention it.
+
+> Sit down beside her -> ch2_mira_sit
+> Buy two cans of soup first -> ch2_mira_soup
+> Leave her to it -> ch2_mira_leave
+
+:: ch2_mira_leave
+You: I didn't see anything.
+
+@show mira expr=02-smile fade=0.3
+Mira @02-smile: Good. You'd be surprised how few people round here can manage that.
+
+@hide mira fade=0.7
+I kept walking. Behind me the machine hummed to itself and nobody said anything, which was what she had asked for. I have wondered since whether it was what she wanted.
+@jump ch2_home
+
+:: ch2_mira_soup
+The machine took my coins with the air of something that had not expected to be fed again. Two cans, corn, hot enough to hurt.
+
+@show mira expr=06-surprised fade=0.3
+Mira @06-surprised: ...
+
+@show mira expr=02-smile fade=0.4
+Mira @02-smile: That's the first thing anyone's handed me in six weeks that wasn't a charge.
+@jump ch2_mira_helmet
+
+:: ch2_mira_sit
+I sat on the kerb. It was colder than it looked, which in Kanamori is most things.
+@jump ch2_mira_helmet
+
+:: ch2_mira_helmet
+@show mira expr=01-neutral fade=0.3
+Mira @01-neutral: My unit signs the inside of the captain's helmet. Old habit. The idea is that you carry them into anything you'd send them into.
+
+@show mira expr=09-thinking fade=0.3
+Mira @09-thinking: There are nine signatures in here. I can read seven.
+
+You: And the other two?
+
+@show mira expr=08-worried fade=0.35
+Mira @08-worried: I can see them. Ink, a hand I know, a full stop after one of them because he always puts one. And every time I get to the end of the word it's gone, like reaching for a stair that isn't there.
+
+Mira @04-sad: I've been sitting here since nine trying to read my own helmet.
+
+@show mira at=center pose=08-holding-helmet fade=0.5
+@face mira 01-neutral
+She stood, and turned it to the light, and then towards me.
+
+Mira @01-neutral: You've been here one day. It hasn't had time to read you properly.
+
+@show mira expr=08-worried fade=0.35
+Mira @08-worried: Tell me what it says.
+
+The inside was scratched and salt-stained, and nine names ran round the rim in nine different pens. Two of them were perfectly easy to read.
+
+> Read her the two names -> ch2_mira_read
+> Ask whether she wants them back tonight -> ch2_mira_ask
+> Hand it back unread -> ch2_mira_unread
+
+:: ch2_mira_read
+You: Tomas Reyes. With a full stop.
+
+You: And Ada Kimura.
+
+@show mira expr=06-surprised fade=0.3
+Mira @06-surprised: Say them again.
+
+You: Tomas Reyes. Ada Kimura.
+
+@show mira expr=11-crying fade=0.4
+Mira @11-crying: Reyes. Kimura. Reyes —
+
+She lost them between one breath and the next. I watched it happen, the way you watch someone miss a step.
+
+You: Tomas Reyes. Ada Kimura.
+
+Mira @11-crying: ...Reyes. Kimura.
+
+She held on that time, for as long as I kept saying them and a little while after.
+
+@set mira_names = 1
+@set trust_mira += 1
+@set knows_signal += 1
+@show mira expr=09-thinking fade=0.5
+Mira @09-thinking: It holds while you're saying it.
+
+She took a marker from a pouch on her belt and wrote both names on the back of her glove in capitals, the way you label a box you intend to find again.
+
+@show mira expr=02-smile fade=0.4
+Mira @02-smile: If you tell anyone I cried on a kerb, clerk, I'll have you reclassified as harbour work.
+@jump ch2_mira_end
+
+:: ch2_mira_ask
+You: Are you sure you want them back? Tonight, I mean. With Thursday coming.
+
+@show mira expr=09-thinking fade=0.4
+Mira @09-thinking: ...
+
+@show mira expr=04-sad fade=0.4
+Mira @04-sad: No. That's the honest answer. If I know their names on Thursday I'll hesitate, and if I hesitate at 14:00 I lose the other seven.
+
+@show mira expr=01-neutral fade=0.3
+Mira @01-neutral: Read them to me on Friday. If there's a Friday.
+
+@set mira_names = 2
+@set trust_mira += 1
+You: Friday. I'll put it in the file.
+@jump ch2_mira_end
+
+:: ch2_mira_unread
+You: It isn't my name to say. Either of them.
+
+@show mira expr=05-angry fade=0.3
+Mira @05-angry: It isn't anyone's. That's the whole —
+
+@show mira expr=04-sad fade=0.4
+Mira @04-sad: No. You're right. They're my people. I should be the one who can read them.
+
+She put the helmet back on, which I think was the point: nobody can see what you're reading if it's on your head.
+@jump ch2_mira_end
+
+:: ch2_mira_end
+@hide mira fade=0.8
+@wait 0.4
+The machine went on selling corn soup to an empty street, and I went back to the inn with the particular tiredness of having done some actual work.
+
+:: ch2_home
 @if trust_rin >= 4 -> ch2_note
 @jump ch3_open
 
